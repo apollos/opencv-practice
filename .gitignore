@@ -1,1 +1,4 @@
 *.hdf5
+*.iml
+.DS_Store
+.idea/
