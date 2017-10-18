@@ -97,7 +97,7 @@ model.fit_generator(
 	validation_data=valGen.generator(),
 	validation_steps=valGen.numImages // 64,
 	epochs=NUM_EPOCHS,
-	max_q_size=64 * 2,
+	max_queue_size=64 * 2,
 	callbacks=callbacks, verbose=1)
 
 # save the network to disk

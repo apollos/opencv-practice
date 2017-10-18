@@ -30,7 +30,7 @@ model = load_model(config.MODEL_PATH)
 # make predictions on the testing data
 print("[INFO] predicting on test data...")
 predictions = model.predict_generator(testGen.generator(),
-	steps=testGen.numImages // 64, max_q_size=64 * 2)
+	steps=testGen.numImages // 64, max_queue_size=64 * 2)
 
 # compute the rank-1 and rank-5 accuracies
 (rank1, rank5) = rank5_accuracy(predictions, testGen.db["labels"])

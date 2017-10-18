@@ -1,8 +1,8 @@
 # USAGE
 # python extract_features.py --dataset ../datasets/animals/images \
 # 	--output ../datasets/animals/hdf5/features.hdf5
-# python extract_features.py --dataset ../datasets/caltech101/images \
-# 	--output ../datasets/caltech101/hdf5/features.hdf5
+# python extract_features.py --dataset ../datasets/caltech-101/images \
+# 	--output ../datasets/caltech-101/hdf5/features.hdf5
 # python extract_features.py --dataset ../datasets/flowers17/images \
 #	--output ../datasets/flowers17/hdf5/features.hdf5
 
