@@ -40,7 +40,7 @@ random.shuffle(imagePaths)
 
 # extract the class labels from the image paths then encode the
 # labels
-labels = [p.split(os.path.sep)[2].split(".")[0] for p in imagePaths]
+labels = [p.split(os.path.sep)[-1].split(".")[0] for p in imagePaths]
 le = LabelEncoder()
 labels = le.fit_transform(labels)
 

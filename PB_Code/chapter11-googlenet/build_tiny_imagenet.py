@@ -16,7 +16,7 @@ import os
 # grab the paths to the training images, then extract the training
 # class labels and encode them
 trainPaths = list(paths.list_images(config.TRAIN_IMAGES))
-trainLabels = [p.split(os.path.sep)[2] for p in trainPaths]
+trainLabels = [p.split(os.path.sep)[-3] for p in trainPaths]
 le = LabelEncoder()
 trainLabels = le.fit_transform(trainLabels)
 

@@ -13,7 +13,7 @@ def convolve(image, K):
 	(kH, kW) = K.shape[:2]
 
 	# allocate memory for the output image, taking care to "pad"
-	# the orders of teh input image so the spatial size (i.e.,
+	# the orders of the input image so the spatial size (i.e.,
 	# width and height) are not reduced
 	pad = (kW - 1) // 2
 	image = cv2.copyMakeBorder(image, pad, pad, pad, pad,
