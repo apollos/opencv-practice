@@ -92,30 +92,73 @@ for i in range(cent_y):
     print("{}: {}".format(i, blurred[i][cent_x]))
 thresh = cv2.threshold(blurred, 90, 255, cv2.THRESH_BINARY)[1]
 '''
+#laplacian = cv2.Laplacian(blurred,cv2.CV_64F)
 canny_rst = cv2.Canny(blurred, 50, 150, L2gradient=True)
 cv2.imshow("Test", canny_rst)
 cv2.waitKey(0)
-cnts = cv2.findContours(canny_rst.copy(), cv2.RETR_EXTERNAL,
-	cv2.CHAIN_APPROX_SIMPLE)
-cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-c = max(cnts, key=cv2.contourArea)
-c = np.array(np.array(c).astype(float)*ratio).astype(int)
-# determine the most extreme points along the contour
-extLeft = tuple(c[c[:, :, 0].argmin()][0])
-extRight = tuple(c[c[:, :, 0].argmax()][0])
-extTop = tuple(c[c[:, :, 1].argmin()][0])
-extBot = tuple(c[c[:, :, 1].argmax()][0])
+# find contours in the thresholded image and initialize the
+top_mid = [int(np.shape(canny_rst)[1]/2), 0]
+bottom_mid = [int(np.shape(canny_rst)[1]/2), np.shape(canny_rst)[0]]
+left_mid = [0, int(np.shape(canny_rst)[0]/2)]
+right_mid = [np.shape(canny_rst)[1], int(np.shape(canny_rst)[0]/2)]
 
-# draw the outline of the object, then draw each of the
-# extreme points, where the left-most is red, right-most
-# is green, top-most is blue, and bottom-most is teal
-cv2.drawContours(image, [c], -1, (0, 255, 255), 2)
-cv2.circle(image, extLeft, 6, (0, 0, 255), -1)
-cv2.circle(image, extRight, 6, (0, 255, 0), -1)
-cv2.circle(image, extTop, 6, (255, 0, 0), -1)
-cv2.circle(image, extBot, 6, (255, 255, 0), -1)
+'''
+kernel = [255, 255, 255, 255, 255]
 
-resize_img = imutils.resize(image, width=800)
-# show the output image
-cv2.imshow("Image", resize_img)
+for i in range(np.shape(canny_rst)[0]):
+    if np.dot(canny_rst[i, top_mid[0]-2:top_mid[0]+3], kernel) >= 130050:
+        top_mid[1] = i
+        break
+
+for i in reversed(range(np.shape(canny_rst)[0])):
+    if np.dot(canny_rst[i, bottom_mid[0]-2: bottom_mid[0]+3], kernel) >= 130050:
+        bottom_mid[1] = i
+        break
+
+for i in range(np.shape(canny_rst)[1]):
+    if np.dot(canny_rst[left_mid[1]-2:left_mid[1]+3, i], kernel) >= 130050:
+        left_mid[0] = i
+        break
+
+for i in reversed(range(np.shape(canny_rst)[1])):
+    if np.dot(canny_rst[right_mid[1]-2:right_mid[1]+3, i], kernel) >= 130050:
+        right_mid[0] = i
+        break
+
+print("({}, {})".format(top_mid[0], top_mid[1]))
+print("({}, {})".format(bottom_mid[0], bottom_mid[1]))
+print("({}, {})".format(left_mid[0], left_mid[1]))
+print("({}, {})".format(right_mid[0], right_mid[1]))
+rotate_degree = 0
+'''
+
+t_rotate_degree = find_border_angel(top_mid, canny_rst, 'horizon')
+b_rotate_degree = find_border_angel(bottom_mid, canny_rst, 'horizon', 1)
+l_rotate_degree = find_border_angel(left_mid, canny_rst, 'vertical')
+r_rotate_degree = find_border_angel(right_mid, canny_rst, 'vertical', 1)
+
+
+top_mid = np.array(np.array(top_mid).astype('float') * ratio).astype('int')
+bottom_mid = np.array(np.array(bottom_mid).astype('float') * ratio).astype('int')
+left_mid = np.array(np.array(left_mid).astype('float') * ratio).astype('int')
+right_mid = np.array(np.array(right_mid).astype('float') * ratio).astype('int')
+xmin = max(left_mid[0], 0)
+ymin = max(top_mid[1], 0)
+xmax = min(right_mid[0], np.shape(image)[1])
+ymax = min(bottom_mid[1], np.shape(image)[0])
+
+print(t_rotate_degree, b_rotate_degree, l_rotate_degree, r_rotate_degree)
+print(xmin, ymin, xmax, ymax)
+'''
+img_rotation = imutils.rotate(image, (t_rotate_degree - b_rotate_degree + r_rotate_degree - l_rotate_degree)/4)
+
+cv2.rectangle(img_rotation, (xmin, ymin), (xmax, ymax), (0, 255, 0), 3)
+resized = imutils.resize(img_rotation, width=800)
+cv2.imshow("Detect", resized)
+'''
+cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (0, 255, 0), 3)
+resized = imutils.resize(image, width=800)
+cv2.imshow("No Rotation", resized)
+
 cv2.waitKey(0)
+
