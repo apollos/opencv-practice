@@ -13,6 +13,12 @@ def sigmoid_activation(x):
 	# compute the sigmoid activation value for a given input
 	return 1.0 / (1 + np.exp(-x))
 
+def sigmoid_deriv(x):
+	# compute the derivative of the sigmoid function ASSUMING
+	# that the input `x` has already been passed through the sigmoid
+	# activation function
+	return x * (1 - x)
+
 def predict(X, W):
 	# take the dot product between our features and weight matrix
 	preds = sigmoid_activation(X.dot(W))
@@ -69,8 +75,10 @@ for epoch in np.arange(0, args["epochs"]):
 	losses.append(loss)
 
 	# the gradient descent update is the dot product between our
-	# features and the error of the predictions
-	gradient = trainX.T.dot(error)
+	# (1) features and (2) the error of the sigmoid derivative of
+	# our predictions
+	d = error * sigmoid_deriv(preds)
+	gradient = trainX.T.dot(d)
 
 	# in the update stage, all we need to do is "nudge" the weight
 	# matrix in the negative direction of the gradient (hence the
@@ -92,7 +100,7 @@ print(classification_report(testY, preds))
 plt.style.use("ggplot")
 plt.figure()
 plt.title("Data")
-plt.scatter(testX[:, 0], testX[:, 1], marker="o", c=testY, s=30)
+plt.scatter(testX[:, 0], testX[:, 1], marker="o", c=testY[:, 0], s=30)
 
 # construct a figure that plots the loss over time
 plt.style.use("ggplot")

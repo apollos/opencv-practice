@@ -1,5 +1,5 @@
 # USAGE
-# python regularization.py --dataset ../datasets/animals
+# python regularization.py --dataset animals
 
 # import the necessary packages
 from sklearn.linear_model import SGDClassifier
@@ -34,7 +34,7 @@ labels = le.fit_transform(labels)
 # partition the data into training and testing splits using 75% of
 # the data for training and the remaining 25% for testing
 (trainX, testX, trainY, testY) = train_test_split(data, labels,
-	test_size=0.25, random_state=5)
+	test_size=0.25, random_state=42)
 
 # loop over our set of regularizers
 for r in (None, "l1", "l2"):

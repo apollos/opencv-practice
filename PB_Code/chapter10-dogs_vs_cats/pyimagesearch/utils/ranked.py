@@ -23,8 +23,8 @@ def rank5_accuracy(preds, labels):
 			rank1 += 1
 
 	# compute the final rank-1 and rank-5 accuracies
-	rank1 /= float(len(labels))
-	rank5 /= float(len(labels))
+	rank1 /= float(len(preds))
+	rank5 /= float(len(preds))
 
 	# return a tuple of the rank-1 and rank-5 accuracies
 	return (rank1, rank5)

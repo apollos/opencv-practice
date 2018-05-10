@@ -114,7 +114,7 @@ class ResNet:
 
 		# softmax classifier
 		x = Flatten()(x)
-		x = Dense(classes, kernel_regularizer=l2(reg))(x)
+		# x = Dense(classes, kernel_regularizer=l2(reg))(x)
 		x = Activation("softmax")(x)
 
 		# create the model
