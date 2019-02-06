@@ -3,12 +3,12 @@
 
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from keras.models import Sequential
 from keras.layers.core import Dense
 from keras.optimizers import SGD
-from sklearn import datasets
+from keras.datasets import mnist
+from keras import backend as K
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -19,17 +19,20 @@ ap.add_argument("-o", "--output", required=True,
 	help="path to the output loss/accuracy plot")
 args = vars(ap.parse_args())
 
-# grab the MNIST dataset (if this is your first time running this
-# script, the download may take a minute -- the 55MB MNIST dataset
-# will be downloaded)
-print("[INFO] loading MNIST (full) dataset...")
-dataset = datasets.fetch_mldata("MNIST Original")
+# grab the MNIST dataset (if this is your first time using this
+# dataset then the 11MB download may take a minute)
+print("[INFO] accessing MNIST...")
+((trainX, trainY), (testX, testY)) = mnist.load_data()
 
-# scale the raw pixel intensities to the range [0, 1.0], then
-# construct the training and testing splits
-data = dataset.data.astype("float") / 255.0
-(trainX, testX, trainY, testY) = train_test_split(data,
-	dataset.target, test_size=0.25)
+# each image in the MNIST dataset is represented as a 28x28x1
+# image, but in order to apply a standard neural network we must
+# first "flatten" the image to be simple list of 28x28=784 pixels
+trainX = trainX.reshape((trainX.shape[0], 28 * 28 * 1))
+testX = testX.reshape((testX.shape[0], 28 * 28 * 1))
+
+# scale data to the range of [0, 1]
+trainX = trainX.astype("float32") / 255.0
+testX = testX.astype("float32") / 255.0
 
 # convert the labels from integers to vectors
 lb = LabelBinarizer()

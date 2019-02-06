@@ -34,7 +34,7 @@ data = data.reshape((data.shape[0], 3072))
 
 # show some information on memory consumption of the images
 print("[INFO] features matrix: {:.1f}MB".format(
-	data.nbytes / (1024 * 1000.0)))
+	data.nbytes / (1024 * 1024.0)))
 
 # encode the labels as integers
 le = LabelEncoder()

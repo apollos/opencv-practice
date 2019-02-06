@@ -1,5 +1,5 @@
 # USAGE
-# python regularization.py --dataset animals
+# python regularization.py --dataset ../datasets/animals
 
 # import the necessary packages
 from sklearn.linear_model import SGDClassifier
@@ -42,7 +42,7 @@ for r in (None, "l1", "l2"):
 	# specified regularization function for 10 epochs
 	print("[INFO] training model with `{}` penalty".format(r))
 	model = SGDClassifier(loss="log", penalty=r, max_iter=10,
-		learning_rate="constant", eta0=0.01, random_state=42)
+		learning_rate="constant", tol=1e-3, eta0=0.01, random_state=42)
 	model.fit(trainX, trainY)
 
 	# evaluate the classifier

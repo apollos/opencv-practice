@@ -69,10 +69,6 @@ trainGen = HDF5DatasetGenerator(config.TRAIN_HDF5, 64, aug=aug,
 valGen = HDF5DatasetGenerator(config.VAL_HDF5, 64,
 	preprocessors=[sp, mp, iap], classes=config.NUM_CLASSES)
 
-# TODO:
-# Change `figPath` and `jsonPath` to correctly use the `FIG_PATH`
-# and `JSON_PATH` in the `tiny_imagenet_config`?
-
 # construct the set of callbacks
 figPath = os.path.sep.join([args["output"], "{}.png".format(
 	os.getpid())])
@@ -97,7 +93,7 @@ model.fit_generator(
 	validation_data=valGen.generator(),
 	validation_steps=valGen.numImages // 64,
 	epochs=NUM_EPOCHS,
-	max_queue_size=64 * 2,
+	max_queue_size=10,
 	callbacks=callbacks, verbose=1)
 
 # save the network to disk

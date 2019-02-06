@@ -30,8 +30,8 @@ i = int(db["labels"].shape[0] * 0.75)
 # grid search where we evaluate our model for each value of C
 print("[INFO] tuning hyperparameters...")
 params = {"C": [0.0001, 0.001, 0.01, 0.1, 1.0]}
-model = GridSearchCV(LogisticRegression(), params, cv=3,
-	n_jobs=args["jobs"])
+model = GridSearchCV(LogisticRegression(solver="lbfgs",
+	multi_class="auto"), params, cv=3, n_jobs=args["jobs"])
 model.fit(db["features"][:i], db["labels"][:i])
 print("[INFO] best hyperparameters: {}".format(model.best_params_))
 

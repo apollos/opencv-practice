@@ -1,9 +1,9 @@
 # USAGE
-# python train_model.py --db ../datasets/animals/hdf5/features.hdf5 \
+# python train_model.py --db ../datasets/animals/hdf5/animals_features.hdf5 \
 #	--model animals.cpickle
-# python train_model.py --db ../datasets/caltech-101/hdf5/features.hdf5 \
+# python train_model.py --db ../datasets/caltech101/hdf5/caltech101_features.hdf5 \
 #	--model caltech101.cpickle
-# python train_model.py --db ../datasets/flowers17/hdf5/features.hdf5 \
+# python train_model.py --db ../datasets/flowers17/hdf5/flowers17_features.hdf5 \
 #	--model flowers17.cpickle
 
 # import the necessary packages
@@ -34,8 +34,8 @@ i = int(db["labels"].shape[0] * 0.75)
 # grid search where we evaluate our model for each value of C
 print("[INFO] tuning hyperparameters...")
 params = {"C": [0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0]}
-model = GridSearchCV(LogisticRegression(), params, cv=3,
-	n_jobs=args["jobs"])
+model = GridSearchCV(LogisticRegression(solver="lbfgs",
+	multi_class="auto"), params, cv=3, n_jobs=args["jobs"])
 model.fit(db["features"][:i], db["labels"][:i])
 print("[INFO] best hyperparameters: {}".format(model.best_params_))
 

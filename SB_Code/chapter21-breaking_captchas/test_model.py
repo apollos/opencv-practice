@@ -47,7 +47,7 @@ for imagePath in imagePaths:
 	# then sort them from left-to-right
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE)
-	cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+	cnts = imutils.grab_contours(cnts)
 	cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:4]
 	cnts = contours.sort_contours(cnts)[0]
 
@@ -65,7 +65,7 @@ for imagePath in imagePaths:
 
 		# pre-process the ROI and classify it then classify it
 		roi = preprocess(roi, 28, 28)
-		roi = np.expand_dims(img_to_array(roi), axis=0)
+		roi = np.expand_dims(img_to_array(roi), axis=0) / 255.0
 		pred = model.predict(roi).argmax(axis=1)[0] + 1
 		predictions.append(str(pred))
 

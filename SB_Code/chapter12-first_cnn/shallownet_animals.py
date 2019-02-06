@@ -1,5 +1,5 @@
 # USAGE
-# python shallownet_animals.py --dataset animals
+# python shallownet_animals.py --dataset ../datasets/animals
 
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer

@@ -44,7 +44,7 @@ for (i, imagePath) in enumerate(imagePaths):
 		# ones
 		cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
 			cv2.CHAIN_APPROX_SIMPLE)
-		cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+		cnts = imutils.grab_contours(cnts)
 		cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:4]
 
 		# loop over the contours

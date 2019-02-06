@@ -1,5 +1,5 @@
 # USAGE
-# python simple_detection.py --image beagle.png --confidence 0.9
+# python simple_detection.py --image beagle.png --confidence 0.75
 
 # import the necessary packages
 from pyimagesearch.utils.simple_obj_det import image_pyramid
