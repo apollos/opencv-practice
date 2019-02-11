@@ -6,6 +6,7 @@ from scipy.spatial import distance as dist
 from imutils import paths
 import numpy as np
 import cv2
+import os
 
 # grab the list of image paths and initialize the index to store the image filename
 # and feature vector
@@ -16,7 +17,7 @@ index = {}
 for imagePath in imagePaths:
 	# load the image and extract the filename
 	image = cv2.imread(imagePath)
-	filename = imagePath[imagePath.rfind("/") + 1:]
+	filename = os.path.basename(imagePath[imagePath.rfind("/") + 1:])
 
 	# extract the mean and standard deviation from each channel of the
 	# BGR image, then update the index with the feature vector
@@ -28,7 +29,7 @@ for imagePath in imagePaths:
 query = cv2.imread(imagePaths[0])
 cv2.imshow("Query (trex_01.png)", query)
 keys = sorted(index.keys())
-
+print(keys)
 # loop over the filenames in the dictionary
 for (i, k) in enumerate(keys):
 	# if this is the query image, ignore it
