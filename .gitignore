@@ -106,3 +106,4 @@ ENV/
 
 my_practice/notebook/data/*
 color_separation/image/*
+barcode-scanner/data/
