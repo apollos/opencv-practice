@@ -103,3 +103,7 @@ ENV/
 # pycharm
 .idea/
 *.iml
+
+my_practice/notebook/data/*
+color_separation/image/*
+barcode-scanner/data/
