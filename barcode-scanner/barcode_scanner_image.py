@@ -59,7 +59,7 @@ if image.shape[1] > hard_limit_width:
 if image.shape[0] > hard_limit_high:
     image = image_resize(image, height=hard_limit_high)
 #'''
-image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+#image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 # 1
 #blur=cv2.GaussianBlur(image,(0,0),3)
 #image=cv2.addWeighted(image,1.5,blur,-0.5,0)
@@ -103,7 +103,7 @@ print(image.shape)
 #cv2.imshow("Image", image)
 #cv2.waitKey(0)
 
-#image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 for i in range(10):
     config = [('ZBAR_QRCODE', 'ZBAR_CFG_ENABLE', 0), 
                 ('ZBAR_CODE39', 'ZBAR_CFG_ENABLE', 0), 
