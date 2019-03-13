@@ -28,7 +28,8 @@ ratio = image.shape[0] / float(resized.shape[0])
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-thresh = cv2.threshold(blurred, 165, 255, cv2.THRESH_BINARY)[1]
+#thresh = cv2.threshold(blurred, 135, 255, cv2.THRESH_TOZERO)[1]
+thresh = cv2.adaptiveThreshold(blurred,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV,7,2)
 cv2.imshow("Image", thresh)
 cv2.waitKey(0)
 # find contours in the thresholded image and initialize the
@@ -44,20 +45,28 @@ for idx in range(len(contours)):
 """
 
 
-cv2.drawContours(resized, contours, len(contours)-1, (255,255,0), 3)
+cv2.drawContours(resized, contours, -1, (255,255,0), 3)
 cv2.imshow("drawContours", resized)
 cv2.waitKey(0)
 
-reshape_contours = np.reshape(contours[-1], (-1, 2))
-print(np.shape(reshape_contours))
+
 
 changed_img = np.zeros(np.shape(im2), dtype=np.uint8)
-for contour in reshape_contours:
-    changed_img[contour[1], contour[0]] = 255
-
-cv2.imshow("changed_img", changed_img)
+for idx in range(len(contours)):
+    if len(contours[idx]) > 50:
+        reshape_contours = np.reshape(contours[idx], (-1, 2))
+        print("Hierarchy: {}".format(hierarchy[0][idx]))
+        for contour in reshape_contours:
+            changed_img[contour[1], contour[0]] = 255
+cv2.imshow("drawContours", changed_img)
 cv2.waitKey(0)
-lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=85, min_theta=0) #, max_theta=40)
+
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+changed_img = cv2.morphologyEx(changed_img, cv2.MORPH_CLOSE, kernel)
+cv2.imshow("closed", changed_img)
+cv2.waitKey(0)
+
+lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=60, min_theta=0) #, max_theta=40) np.pi / 180
 #lines = cv2.HoughLines(changed_img, 1, np.pi / 180, 150, None, 0, 0)
 print(len(lines))
 painted_lines = []
@@ -68,7 +77,7 @@ if lines is not None:
         theta = lines[i][0][1]
         same_line = False
         for existed_line in painted_lines:
-            if rho - 50 <existed_line[0] < rho+50 and theta - 3 < existed_line[1]<theta +3:
+            if rho - 30 <existed_line[0] < rho+30 and theta - 2 < existed_line[1]<theta +2:
                 same_line = True
                 break
         if same_line:
