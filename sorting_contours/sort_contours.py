@@ -66,7 +66,7 @@ cv2.imshow("Edge Map", accumEdged)
 
 # find contours in the accumulated image, keeping only the largest
 # ones
-(cnts, _) = cv2.findContours(accumEdged.copy(), cv2.RETR_EXTERNAL,
+(_,cnts, _) = cv2.findContours(accumEdged.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
 orig = image.copy()
