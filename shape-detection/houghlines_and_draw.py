@@ -37,14 +37,15 @@ print("{} {} {}".format(np.shape(im2), np.shape(contours), np.shape(hierarchy)))
 
 changed_img = np.zeros(np.shape(im2), dtype=np.uint8)
 for idx in range(len(contours)):
-    if len(contours[idx]) > 700:
+    if len(contours[idx]) > 750:
         reshape_contours = np.reshape(contours[idx], (-1, 2))
+        print("Hierarchy: {}".format(hierarchy[0][idx]))
         for contour in reshape_contours:
             changed_img[contour[1], contour[0]] = 255
 cv2.imshow("drawContours", changed_img)
 cv2.waitKey(0)
 
-lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=70, min_theta=0) #, max_theta=40)
+lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=80, min_theta=0) #, max_theta=40)
 #lines = cv2.HoughLines(changed_img, 1, np.pi / 180, 150, None, 0, 0)
 print(len(lines))
 painted_lines = []
@@ -56,7 +57,7 @@ if lines is not None:
         same_line = False
         #"""
         for existed_line in painted_lines:
-            if rho - 50 <existed_line[0] < rho+50 and theta - 1 < existed_line[1]<theta +1:
+            if rho - 35 <existed_line[0] < rho+35 and theta - 1 < existed_line[1]<theta +1:
                 same_line = True
                 break
         #"""

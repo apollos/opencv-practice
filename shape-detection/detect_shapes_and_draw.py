@@ -28,7 +28,7 @@ ratio = image.shape[0] / float(resized.shape[0])
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-thresh = cv2.threshold(blurred, 145, 255, cv2.THRESH_BINARY)[1]
+thresh = cv2.threshold(blurred, 165, 255, cv2.THRESH_BINARY)[1]
 cv2.imshow("Image", thresh)
 cv2.waitKey(0)
 # find contours in the thresholded image and initialize the
