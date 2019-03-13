@@ -22,6 +22,8 @@ class ShapeDetector:
             # compute the bounding box of the contour and use the
             # bounding box to compute the aspect ratio
             (x, y, w, h) = cv2.boundingRect(approx)
+            if w*h < 500:
+                return None
             ar = w / float(h)
 
             # a square will have an aspect ratio that is approximately

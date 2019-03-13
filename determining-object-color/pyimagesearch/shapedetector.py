@@ -22,6 +22,10 @@ class ShapeDetector:
 			# bounding box to compute the aspect ratio
 			(x, y, w, h) = cv2.boundingRect(approx)
 			ar = w / float(h)
+			if w*h < 500:
+				return None
+			else:
+				print(w*h)
 
 			# a square will have an aspect ratio that is approximately
 			# equal to one, otherwise, the shape is a rectangle
@@ -36,4 +40,5 @@ class ShapeDetector:
 			shape = "circle"
 
 		# return the name of the shape
+		print("!!!!! {}".format(shape))
 		return shape
