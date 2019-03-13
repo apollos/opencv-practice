@@ -20,14 +20,14 @@ cv2.imshow("Original", image)
 # using functions like cv2.add and cv2.subtract, values will be clipped
 # to this range, even if the added or subtracted values fall outside the
 # range of [0, 255]. Check out an example:
-print "max of 255: " + str(cv2.add(np.uint8([200]), np.uint8([100])))
-print "min of 0: " + str(cv2.subtract(np.uint8([50]), np.uint8([100])))
+print("max of 255: " + str(cv2.add(np.uint8([200]), np.uint8([100]))))
+print("min of 0: " + str(cv2.subtract(np.uint8([50]), np.uint8([100]))))
 
 # NOTE: if you use NumPy arithmetic operations on these arrays, the value
 # will be modulos (wrap around) instead of being  clipped to the [0, 255]
 # range. This is important to keep in mind when working with images.
-print "wrap around: " + str(np.uint8([200]) + np.uint8([100]))
-print "wrap around: " + str(np.uint8([50]) - np.uint8([100]))
+print("wrap around: " + str(np.uint8([200]) + np.uint8([100])))
+print("wrap around: " + str(np.uint8([50]) - np.uint8([100])))
 
 # let's increase the intensity of all pixels in our image by 100 -- we
 # accomplish this by constructing a NumPy array that is the same size of
