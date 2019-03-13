@@ -53,7 +53,7 @@ cv2.waitKey(0)
 
 changed_img = np.zeros(np.shape(im2), dtype=np.uint8)
 for idx in range(len(contours)):
-    if len(contours[idx]) > 50:
+    if len(contours[idx]) > 60:
         reshape_contours = np.reshape(contours[idx], (-1, 2))
         print("Hierarchy: {}".format(hierarchy[0][idx]))
         for contour in reshape_contours:
@@ -66,7 +66,7 @@ changed_img = cv2.morphologyEx(changed_img, cv2.MORPH_CLOSE, kernel)
 cv2.imshow("closed", changed_img)
 cv2.waitKey(0)
 
-lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=60, min_theta=0) #, max_theta=40) np.pi / 180
+lines = cv2.HoughLines(changed_img, rho=1, theta = np.pi / 180, threshold=80, min_theta=0) #, max_theta=40) np.pi / 180
 #lines = cv2.HoughLines(changed_img, 1, np.pi / 180, 150, None, 0, 0)
 print(len(lines))
 painted_lines = []
@@ -77,7 +77,7 @@ if lines is not None:
         theta = lines[i][0][1]
         same_line = False
         for existed_line in painted_lines:
-            if rho - 30 <existed_line[0] < rho+30 and theta - 2 < existed_line[1]<theta +2:
+            if rho - 70 <existed_line[0] < rho+70 and theta - 5 < existed_line[1]<theta +5:
                 same_line = True
                 break
         if same_line:
