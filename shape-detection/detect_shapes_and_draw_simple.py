@@ -27,7 +27,7 @@ def draw_min_rect_circle(img, cnts):  # conts = contours
     return img
 
 
-def draw_approx_hull_polygon(img, cnts):
+def draw_approx_hull_polygon(img, cnts, get_hulls=False):
     img = np.copy(img)
     #img = np.zeros(img.shape, dtype=np.uint8)
 
@@ -44,7 +44,6 @@ def draw_approx_hull_polygon(img, cnts):
     hulls = [cv2.convexHull(cnt) for cnt in cnts]
 
     cv2.polylines(img, hulls, True, (0, 0, 255), 2)  # red
-    print(hulls)
 
 
     # for cnt in cnts:
@@ -56,8 +55,41 @@ def draw_approx_hull_polygon(img, cnts):
     #
     #     hull = cv2.convexHull(cnt)
     #     cv2.polylines(img, [hull, ], True, (0, 0, 255), 2)  # red
+    if get_hulls:
+        return img, hulls
+    else:
+        return img
+
+
+def generate_background_lst(xmin, ymin, xmax, ymax, img):
+    background_lst = []
+    for row in range(np.shape(img)[0]):
+        for column in range(np.shape(img)[1]):
+            if row < ymin or row > ymax or column < xmin or column > xmax:
+                if len(background_lst) > 0:
+                    if not np.equal(background_lst, img[row, column]).all(axis=1).any():
+                        background_lst.append(img[row, column])
+                else:
+                    background_lst.append(img[row, column])
+    print(np.shape(background_lst))
+    return background_lst
+
+
+def reset_image(background_lst, img):
+    img = np.copy(img)
+    for background in background_lst:
+        rowlst, collst = np.where(np.equal(img, background).all(axis=2))
+        img[rowlst, collst] = [231, 12, 12]
     return img
 
+
+def reset_image_by_location(xmin, ymin, xmax, ymax, img):
+    img = np.copy(img)
+    img[:ymin, :] = [231, 12, 12]
+    img[ymax:, :] = [231, 12, 12]
+    img[:, :xmin] = [231, 12, 12]
+    img[:, xmax:] = [231, 12, 12]
+    return img
 
 def run():
     image = cv2.imread('test_real_2.jpg')  # a black objects on white image is better
@@ -121,6 +153,35 @@ def run():
     for idx, img in enumerate(imgs):
         # cv2.imwrite("%s.jpg" % id(img), img)
         cv2.imshow("contours_{}".format(idx), img)
+    cv2.waitKey(0)
+
+    new_contours = []
+    for cnt in contours:
+        for ccnt in cnt:
+            if ccnt[0][0] < 50 or ccnt[0][1] < 50 or \
+                    np.shape(image)[0] - ccnt[0][1] < 50 or \
+                    np.shape(image)[1] - ccnt[0][0] < 50:
+                continue
+            else:
+                new_contours.append(ccnt)
+    new_contours = [np.array(new_contours)]
+
+    new_img, hulls = draw_approx_hull_polygon(image, new_contours, get_hulls=True)
+    print(np.shape(hulls))
+    min_x = np.min(hulls[0][:, 0, 0])
+    max_x = np.max(hulls[0][:, 0, 0])
+    min_y = np.min(hulls[0][:, 0, 1])
+    max_y = np.max(hulls[0][:, 0, 1])
+    print(np.shape(new_img))
+    #background_lst = generate_background_lst(min_x, min_y, max_x, max_y, image)
+    #new_image = reset_image(background_lst, image)
+    new_image = reset_image_by_location(min_x, min_y, max_x, max_y, image)
+
+
+    gray = cv2.cvtColor(new_image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 7, 2)
+    cv2.imshow("new_image", thresh)
     cv2.waitKey(0)
 
     lines = cv2.HoughLines(thresh, rho=1, theta=np.pi / 180, threshold=80,
