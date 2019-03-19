@@ -3,6 +3,7 @@ import numpy as np
 import imutils
 from collections import namedtuple
 import copy
+import json
 
 Resolution = namedtuple("Resolution", ("high", "width"))
 front_imgs = ["t1.png", "t2.png", "t3.png", "t4.png"]
@@ -93,7 +94,7 @@ def rotate_image(mat, background, angle):
 #def update_available_pair()
 
 # My assumption is that all front imgs shall be original size and it means that the size shall reflect the true size in real world
-sample_lst = ['t3.png', 't4.png', 't1.png', 't2.png', 't4.png'] #np.random.choice(front_imgs, sample_num_per_img)
+sample_lst = np.random.choice(front_imgs, sample_num_per_img)
 print("sample_lst: {}".format(sample_lst))
 images = []
 total_area = 0
@@ -119,6 +120,7 @@ background_img_original = cv2.imread(background_img_name)
 background_img = cv2.resize(background_img_original, (sample_size.width, sample_size.high))
 
 filled_lst = []
+json_file = {}
 # start from max area of horizon
 sorted_horizon_lst = []
 for idx in horizon_lst:
@@ -136,6 +138,14 @@ for image_idx in sorted_horizon_lst:
     available_x, available_y, filled_lst = find_available_pos(img, filled_lst, np.shape(background_img))
     if available_x is not None:
         background_img[available_y:available_y + np.shape(img)[0], available_x:available_x + np.shape(img)[1]] = img
+        json_file[sample_lst[horizon_lst[image_idx]]] = {
+            "ratio": float(ratio),
+            "degree": int(degree),
+            "xmin": int(available_x),
+            "ymin": int(available_y),
+            "xmax": int(available_x + np.shape(img)[1]),
+            "ymax": int(available_y + np.shape(img)[0])
+        }
         cv2.imshow("horizon", background_img)
         cv2.waitKey(0)
     else:
@@ -157,11 +167,21 @@ for image_idx in sorted_vertical_lst:
     available_x, available_y, filled_lst = find_available_pos(img, filled_lst, np.shape(background_img))
     if available_x is not None:
         background_img[available_y:available_y + np.shape(img)[0], available_x:available_x + np.shape(img)[1]] = img
+        json_file[sample_lst[vertical_lst[image_idx]]] = {
+            "ratio": float(ratio),
+            "degree": int(degree),
+            "xmin": int(available_x),
+            "ymin": int(available_y),
+            "xmax": int(available_x + np.shape(img)[1]),
+            "ymax": int(available_y + np.shape(img)[0])
+        }
         cv2.imshow("vertical", background_img)
         cv2.waitKey(0)
     else:
         continue
 
 cv2.imwrite("output.png", background_img)
+with open("output.json", "w") as f:
+    json.dump(json_file, f, indent=2)
 
 
