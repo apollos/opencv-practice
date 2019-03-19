@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import imutils
 
 
 def draw_contours(img, cnts):  # conts = contours
@@ -92,7 +93,8 @@ def reset_image_by_location(xmin, ymin, xmax, ymax, img):
     return img
 
 def run():
-    image = cv2.imread('test_real_2.jpg')  # a black objects on white image is better
+    image = cv2.imread('output.png')  # a black objects on white image is better
+    image = imutils.resize(image, width=640)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 7, 2)
