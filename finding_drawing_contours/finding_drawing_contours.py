@@ -19,7 +19,7 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imshow("Original", image)
 
 # find all contours in the image and draw ALL contours on the image
-(_, cnts, _) = cv2.findContours(gray.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+(cnts, _) = cv2.findContours(gray.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 clone = image.copy()
 cv2.drawContours(clone, cnts, -1, (0, 255, 0), 2)
 print ("Found {} contours".format(len(cnts)))
@@ -45,7 +45,7 @@ cv2.destroyAllWindows()
 
 # find contours in the image, but this time keep only the EXTERNAL
 # contours in the image
-(_, cnts, _) = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+(cnts, _) = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cv2.drawContours(clone, cnts, -1, (0, 255, 0), 2)
 print ("Found {} EXTERNAL contours".format(len(cnts)))
 
