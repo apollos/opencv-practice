@@ -31,15 +31,18 @@ def find_available_pos(img, filled_lst, background_size):
             current_y = start_y
             candidate_lst = np.array(filled_lst)[np.where((np.array(filled_lst)[:, 1] <= current_y) & (np.array(filled_lst)[:, 1] > last_y))[0]]
             if len(candidate_lst) == 0:
-                print("{} {} {}".format(filled_lst, current_y, last_y))
-            suggest_x = candidate_lst[np.argsort(candidate_lst, axis=0)[::-1][:, 2][0]][2] + current_buffer
+                #print("{} {} {}".format(filled_lst, current_y, last_y))
+                suggest_x = start_x
+            else:
+                suggest_x = candidate_lst[np.argsort(candidate_lst, axis=0)[::-1][:, 2][0]][2] + current_buffer
             suggest_y = current_y
             if suggest_x + np.shape(img)[1] <= background_size[1] and \
                     suggest_y + np.shape(img)[0] <= background_size[0]:
                 filled_lst.append([suggest_x, suggest_y, suggest_x + np.shape(img)[1], suggest_y + np.shape(img)[0]])
                 return suggest_x, suggest_y, filled_lst
             else:
-                current_y = candidate_lst[np.argsort(candidate_lst, axis=0)[:, 3][0]][3]
+                if len(candidate_lst) > 0:
+                    current_y = candidate_lst[np.argsort(candidate_lst, axis=0)[:, 3][0]][3]
                 candidate_lst = np.array(filled_lst)[np.where(np.array(filled_lst)[:, 1] >= current_y)[0]]
                 if len(candidate_lst) == 0:
                     tmp_corrdinate = filled_lst[np.argsort(filled_lst, axis=0)[:, 3][0]]
@@ -69,7 +72,7 @@ def rotate_image(mat, background, angle):
     """
     new_width = int(np.shape(mat)[1] * abs(np.cos(np.radians(angle))) + np.shape(mat)[0] * abs(np.sin(np.radians(angle))))
     new_high = int(np.shape(mat)[1] * abs(np.sin(np.radians(angle))) + np.shape(mat)[0] * abs(np.cos(np.radians(angle))))
-    background = cv2.resize(background, (new_width+300, int((new_width+300)*np.shape(mat)[0]/np.shape(mat)[1])), interpolation = cv2.INTER_AREA)
+    background = cv2.resize(background, (int(new_width*1.2), int(new_high*1.2)), interpolation = cv2.INTER_AREA)
     #print("{}: {} vs {} ({} {})".format(angle, np.shape(mat), np.shape(background), new_width, new_high))
     height, width = mat.shape[:2] # image shape has 3 dimensions
     bg_height, bg_width = background.shape[:2]  # image shape has 3 dimensions
@@ -80,6 +83,11 @@ def rotate_image(mat, background, angle):
 
     background[fill_y:fill_y+height, fill_x:fill_x+width] = mat
     background = imutils.rotate(background, angle)
+
+    (cX, cY) = (bg_width / 2, bg_height / 2)
+    # rotate our image by 45 degrees
+    M = cv2.getRotationMatrix2D((cX, cY), degree, 1.0)
+    background = cv2.warpAffine(background, M, (bg_width, bg_height))
     #print("{} {} {} {}".format(fill_x, int(np.shape(mat)[0] * abs(np.sin(np.radians(angle)))/2),
     #                                fill_y, int(np.shape(mat)[1] * abs(np.sin(np.radians(angle)))/2)))
     cropped_x = max(fill_x - int(np.shape(mat)[0] * abs(np.sin(np.radians(angle)))/2), 0)
@@ -97,23 +105,24 @@ def rotate_image(mat, background, angle):
 sample_lst = np.random.choice(front_imgs, sample_num_per_img)
 print("sample_lst: {}".format(sample_lst))
 images = []
-total_area = 0
+shape_lst = []
 horizon_lst = []
 vertical_lst = []
+total_area = 0
 
 for img_name in sample_lst:
     images.append(cv2.imread(img_name))
+    shape_lst.append([np.shape(images[-1])[0], np.shape(images[-1])[1]])
     total_area += np.shape(images[-1])[0] * np.shape(images[-1])[1]
     if np.shape(images[-1])[0] > np.shape(images[-1])[1]:
         vertical_lst.append(len(images) - 1)
     else:
         horizon_lst.append(len(images) -1)
+shape_lst = np.array(shape_lst)
+ratio = min(sample_size.high/float(sum(np.argsort(shape_lst[:, 0])[::-1][:2])),
+            sample_size.width/float(sum(np.argsort(shape_lst[:, 1])[::-1][:2])), 1,
+            float(sample_size.width*sample_size.high)/float(total_area))
 
-if total_area > sample_size.width*sample_size.high*0.9:
-    # we do resize
-    ratio = sample_size.width*sample_size.high*0.88 / total_area
-else:
-    ratio = 1
 print("Change ratio: {}".format(ratio))
 background_img_name = np.random.choice(background_imgs, 1)[0]
 background_img_original = cv2.imread(background_img_name)
