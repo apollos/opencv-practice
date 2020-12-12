@@ -3,10 +3,10 @@
 
 # import the necessary packages
 from pyimagesearch.nn.conv import DCGAN
-from keras.models import Model
-from keras.layers import Input
-from keras.optimizers import Adam
-from keras.datasets import mnist
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.datasets import mnist
 from sklearn.utils import shuffle
 from imutils import build_montages
 import numpy as np

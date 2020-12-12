@@ -5,9 +5,11 @@
 from pyimagesearch.io import HDF5DatasetWriter
 from conf import sr_config as config
 from imutils import paths
-from scipy import misc
+from PIL import Image
+import numpy as np
 import shutil
 import random
+import PIL
 import cv2
 import os
 
@@ -41,10 +43,16 @@ for imagePath in imagePaths:
 	# original size -- this will process allows us to generate low
 	# resolution inputs that we'll then learn to reconstruct the high
 	# resolution versions from
-	scaled = misc.imresize(image, 1.0 / config.SCALE,
-		interp="bicubic")
-	scaled = misc.imresize(scaled, config.SCALE / 1.0,
-		interp="bicubic")
+	lowW = int(w * (1.0 / config.SCALE))
+	lowH = int(h * (1.0 / config.SCALE))
+	highW = int(lowW * (config.SCALE / 1.0))
+	highH = int(lowH * (config.SCALE / 1.0))
+
+	# perform the actual scaling
+	scaled = np.array(Image.fromarray(image).resize((lowW, lowH),
+		resample=PIL.Image.BICUBIC))
+	scaled = np.array(Image.fromarray(scaled).resize((highW, highH),
+		resample=PIL.Image.BICUBIC))
 
 	# slide a window from left-to-right and top-to-bottom
 	for y in range(0, h - config.INPUT_DIM + 1, config.STRIDE):

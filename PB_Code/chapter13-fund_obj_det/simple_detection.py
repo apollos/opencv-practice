@@ -5,9 +5,9 @@
 from pyimagesearch.utils.simple_obj_det import image_pyramid
 from pyimagesearch.utils.simple_obj_det import sliding_window
 from pyimagesearch.utils.simple_obj_det import classify_batch
-from keras.applications import ResNet50
-from keras.preprocessing.image import img_to_array
-from keras.applications import imagenet_utils
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.applications import imagenet_utils
 from imutils.object_detection import non_max_suppression
 import numpy as np
 import argparse

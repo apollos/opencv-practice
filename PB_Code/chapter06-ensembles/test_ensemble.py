@@ -4,8 +4,8 @@
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
-from keras.models import load_model
-from keras.datasets import cifar10
+from tensorflow.keras.models import load_model
+from tensorflow.keras.datasets import cifar10
 import numpy as np
 import argparse
 import glob

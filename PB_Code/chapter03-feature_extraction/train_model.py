@@ -1,9 +1,9 @@
 # USAGE
-# python train_model.py --db ../datasets/animals/hdf5/animals_features.hdf5 \
+# python train_model.py --db ../datasets/animals/hdf5/features.hdf5 \
 #	--model animals.cpickle
-# python train_model.py --db ../datasets/caltech101/hdf5/caltech101_features.hdf5 \
+# python train_model.py --db ../datasets/caltech-101/hdf5/features.hdf5 \
 #	--model caltech101.cpickle
-# python train_model.py --db ../datasets/flowers17/hdf5/flowers17_features.hdf5 \
+# python train_model.py --db ../datasets/flowers17/hdf5/features.hdf5 \
 #	--model flowers17.cpickle
 
 # import the necessary packages

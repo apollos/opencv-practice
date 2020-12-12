@@ -8,7 +8,7 @@ from pyimagesearch.preprocessing import SimplePreprocessor
 from pyimagesearch.preprocessing import MeanPreprocessor
 from pyimagesearch.utils.ranked import rank5_accuracy
 from pyimagesearch.io import HDF5DatasetGenerator
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import json
 
 # load the RGB means for the training set

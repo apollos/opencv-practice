@@ -9,7 +9,7 @@ from pyimagesearch.preprocessing import MeanPreprocessor
 from pyimagesearch.preprocessing import CropPreprocessor
 from pyimagesearch.io import HDF5DatasetGenerator
 from pyimagesearch.utils.ranked import rank5_accuracy
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import numpy as np
 import progressbar
 import json

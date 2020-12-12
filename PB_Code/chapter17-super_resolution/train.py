@@ -9,7 +9,7 @@ matplotlib.use("Agg")
 from conf import sr_config as config
 from pyimagesearch.io import HDF5DatasetGenerator
 from pyimagesearch.nn.conv import SRCNN
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
 

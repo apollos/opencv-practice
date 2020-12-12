@@ -9,8 +9,8 @@ matplotlib.use("Agg")
 from pyimagesearch.callbacks import TrainingMonitor
 from sklearn.preprocessing import LabelBinarizer
 from pyimagesearch.nn.conv import MiniVGGNet
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import argparse
 import os
 

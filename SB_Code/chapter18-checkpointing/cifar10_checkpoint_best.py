@@ -4,9 +4,9 @@
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer
 from pyimagesearch.nn.conv import MiniVGGNet
-from keras.callbacks import ModelCheckpoint
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import argparse
 
 # construct the argument parse and parse the arguments

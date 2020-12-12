@@ -15,8 +15,8 @@ from pyimagesearch.preprocessing import MeanPreprocessor
 from pyimagesearch.callbacks import TrainingMonitor
 from pyimagesearch.io import HDF5DatasetGenerator
 from pyimagesearch.nn.conv import AlexNet
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import Adam
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
 import json
 import os
 

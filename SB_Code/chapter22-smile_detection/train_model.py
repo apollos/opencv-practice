@@ -5,8 +5,8 @@
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-from keras.preprocessing.image import img_to_array
-from keras.utils import np_utils
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.utils import to_categorical
 from pyimagesearch.nn.conv import LeNet
 from imutils import paths
 import matplotlib.pyplot as plt
@@ -49,7 +49,7 @@ labels = np.array(labels)
 
 # convert the labels from integers to vectors
 le = LabelEncoder().fit(labels)
-labels = np_utils.to_categorical(le.transform(labels), 2)
+labels = to_categorical(le.transform(labels), 2)
 
 # account for skew in the labeled data
 classTotals = labels.sum(axis=0)
@@ -86,8 +86,8 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, 15), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, 15), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, 15), H.history["acc"], label="acc")
-plt.plot(np.arange(0, 15), H.history["val_acc"], label="val_acc")
+plt.plot(np.arange(0, 15), H.history["accuracy"], label="acc")
+plt.plot(np.arange(0, 15), H.history["val_accuracy"], label="val_acc")
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")

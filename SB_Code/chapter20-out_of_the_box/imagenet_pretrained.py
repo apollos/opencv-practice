@@ -2,15 +2,15 @@
 # python imagenet_pretrained.py --image example_images/example_01.jpg --model vgg16
 
 # import the necessary packages
-from keras.applications import ResNet50
-from keras.applications import InceptionV3
-from keras.applications import Xception # TensorFlow ONLY
-from keras.applications import VGG16
-from keras.applications import VGG19
-from keras.applications import imagenet_utils
-from keras.applications.inception_v3 import preprocess_input
-from keras.preprocessing.image import img_to_array
-from keras.preprocessing.image import load_img
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.applications import InceptionV3
+from tensorflow.keras.applications import Xception
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications import VGG19
+from tensorflow.keras.applications import imagenet_utils
+from tensorflow.keras.applications.inception_v3 import preprocess_input
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import load_img
 import numpy as np
 import argparse
 import cv2
@@ -29,7 +29,7 @@ MODELS = {
 	"vgg16": VGG16,
 	"vgg19": VGG19,
 	"inception": InceptionV3,
-	"xception": Xception,  # TensorFlow ONLY
+	"xception": Xception,
 	"resnet": ResNet50
 }
 

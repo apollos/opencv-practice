@@ -1,5 +1,5 @@
 # import the necessary packages
-from keras.applications import imagenet_utils
+from tensorflow.keras.applications import imagenet_utils
 import imutils
 
 def sliding_window(image, step, ws):

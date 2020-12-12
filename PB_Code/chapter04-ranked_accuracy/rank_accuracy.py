@@ -1,7 +1,7 @@
 # USAGE
 # python rank_accuracy.py --db ../datasets/flowers17/hdf5/features.hdf5
 #	--model ../chapter03-feature_extraction/flowers17.cpickle
-# python rank_accuracy.py --db ../datasets/caltech101/hdf5/features.hdf5 \
+# python rank_accuracy.py --db ../datasets/caltech-101/hdf5/features.hdf5 \
 #	--model ../chapter03-feature_extraction/caltech101.cpickle
 
 # import the necessary packages

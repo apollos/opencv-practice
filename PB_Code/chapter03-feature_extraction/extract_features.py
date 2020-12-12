@@ -7,10 +7,10 @@
 #	--output ../datasets/flowers17/hdf5/features.hdf5
 
 # import the necessary packages
-from keras.applications import VGG16
-from keras.applications import imagenet_utils
-from keras.preprocessing.image import img_to_array
-from keras.preprocessing.image import load_img
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications import imagenet_utils
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import load_img
 from sklearn.preprocessing import LabelEncoder
 from pyimagesearch.io import HDF5DatasetWriter
 from imutils import paths
@@ -64,7 +64,7 @@ widgets = ["Extracting Features: ", progressbar.Percentage(), " ",
 pbar = progressbar.ProgressBar(maxval=len(imagePaths),
 	widgets=widgets).start()
 
-# loop over the images in patches
+# loop over the images in batches
 for i in np.arange(0, len(imagePaths), bs):
 	# extract the batch of images and labels, then initialize the
 	# list of actual images that will be passed through the network

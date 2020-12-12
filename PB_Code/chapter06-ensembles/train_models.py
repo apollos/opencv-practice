@@ -9,9 +9,9 @@ matplotlib.use("Agg")
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from pyimagesearch.nn.conv import MiniVGGNet
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -87,9 +87,9 @@ for i in np.arange(0, args["num_models"]):
 		label="train_loss")
 	plt.plot(np.arange(0, 40), H.history["val_loss"],
 		label="val_loss")
-	plt.plot(np.arange(0, 40), H.history["acc"],
+	plt.plot(np.arange(0, 40), H.history["accuracy"],
 		label="train_acc")
-	plt.plot(np.arange(0, 40), H.history["val_acc"],
+	plt.plot(np.arange(0, 40), H.history["val_accuracy"],
 		label="val_acc")
 	plt.title("Training Loss and Accuracy for model {}".format(i))
 	plt.xlabel("Epoch #")

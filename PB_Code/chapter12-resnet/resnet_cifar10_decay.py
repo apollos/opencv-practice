@@ -9,10 +9,10 @@ matplotlib.use("Agg")
 from sklearn.preprocessing import LabelBinarizer
 from pyimagesearch.nn.conv import ResNet
 from pyimagesearch.callbacks import TrainingMonitor
-from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import LearningRateScheduler
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import numpy as np
 import argparse
 import sys

@@ -4,10 +4,10 @@
 # import the necessary packages
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
-from keras.models import Sequential
-from keras.layers.core import Dense
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -42,7 +42,7 @@ model.add(Dense(1024, input_shape=(3072,), activation="relu"))
 model.add(Dense(512, activation="relu"))
 model.add(Dense(10, activation="softmax"))
 
-# train the model usign SGD
+# train the model using SGD
 print("[INFO] training network...")
 sgd = SGD(0.01)
 model.compile(loss="categorical_crossentropy", optimizer=sgd,
@@ -61,8 +61,8 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, 100), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, 100), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, 100), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0, 100), H.history["val_acc"], label="val_acc")
+plt.plot(np.arange(0, 100), H.history["accuracy"], label="train_acc")
+plt.plot(np.arange(0, 100), H.history["val_accuracy"], label="val_acc")
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")

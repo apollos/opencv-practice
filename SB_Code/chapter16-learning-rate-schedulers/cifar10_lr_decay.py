@@ -9,9 +9,9 @@ matplotlib.use("Agg")
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from pyimagesearch.nn.conv import MiniVGGNet
-from keras.callbacks import LearningRateScheduler
-from keras.optimizers import SGD
-from keras.datasets import cifar10
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -76,8 +76,8 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, 40), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, 40), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, 40), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0, 40), H.history["val_acc"], label="val_acc")
+plt.plot(np.arange(0, 40), H.history["accuracy"], label="train_acc")
+plt.plot(np.arange(0, 40), H.history["val_accuracy"], label="val_acc")
 plt.title("Training Loss and Accuracy on CIFAR-10")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")

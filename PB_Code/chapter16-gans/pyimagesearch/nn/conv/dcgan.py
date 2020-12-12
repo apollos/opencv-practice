@@ -1,13 +1,13 @@
 # import the necessary packages
-from keras.models import Sequential
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import Conv2DTranspose
-from keras.layers.convolutional import Conv2D
-from keras.layers.advanced_activations import LeakyReLU
-from keras.layers.core import Activation
-from keras.layers.core import Flatten
-from keras.layers.core import Dense
-from keras.layers.core import Reshape
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2DTranspose
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import LeakyReLU
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Reshape
 
 class DCGAN:
 	@staticmethod

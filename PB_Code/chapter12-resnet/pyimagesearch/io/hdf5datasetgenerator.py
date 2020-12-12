@@ -1,5 +1,5 @@
 # import the necessary packages
-from keras.utils import np_utils
+from tensorflow.keras.utils import to_categorical
 import numpy as np
 import h5py
 
@@ -17,7 +17,7 @@ class HDF5DatasetGenerator:
 
 		# open the HDF5 database for reading and determine the total
 		# number of entries in the database
-		self.db = h5py.File(dbPath)
+		self.db = h5py.File(dbPath, "r")
 		self.numImages = self.db["labels"].shape[0]
 
 	def generator(self, passes=np.inf):
@@ -35,7 +35,7 @@ class HDF5DatasetGenerator:
 
 				# check to see if the labels should be binarized
 				if self.binarize:
-					labels = np_utils.to_categorical(labels,
+					labels = to_categorical(labels,
 						self.classes)
 
 				# check to see if our preprocessors are not None

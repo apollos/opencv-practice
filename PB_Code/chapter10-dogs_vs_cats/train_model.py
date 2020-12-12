@@ -16,7 +16,7 @@ ap.add_argument("-d", "--db", required=True,
 	help="path HDF5 database")
 ap.add_argument("-m", "--model", required=True,
 	help="path to output model")
-ap.add_argument("-j", "--jobs", type=int, default=-1,
+ap.add_argument("-j", "--jobs", type=int, default=1,
 	help="# of jobs to run when tuning hyperparameters")
 args = vars(ap.parse_args())
 

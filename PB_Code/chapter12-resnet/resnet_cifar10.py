@@ -12,11 +12,11 @@ from sklearn.preprocessing import LabelBinarizer
 from pyimagesearch.nn.conv import ResNet
 from pyimagesearch.callbacks import EpochCheckpoint
 from pyimagesearch.callbacks import TrainingMonitor
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import SGD
-from keras.datasets import cifar10
-from keras.models import load_model
-import keras.backend as K
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.models import load_model
+import tensorflow.keras.backend as K
 import numpy as np
 import argparse
 import sys
@@ -74,7 +74,7 @@ else:
 	# update the learning rate
 	print("[INFO] old learning rate: {}".format(
 		K.get_value(model.optimizer.lr)))
-	K.set_value(model.optimizer.lr, 1e-5)
+	K.set_value(model.optimizer.lr, 1e-2)
 	print("[INFO] new learning rate: {}".format(
 		K.get_value(model.optimizer.lr)))
 

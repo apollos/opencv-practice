@@ -10,12 +10,12 @@ from pyimagesearch.preprocessing import ImageToArrayPreprocessor
 from pyimagesearch.preprocessing import AspectAwarePreprocessor
 from pyimagesearch.datasets import SimpleDatasetLoader
 from pyimagesearch.nn.conv import FCHeadNet
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import RMSprop
-from keras.optimizers import SGD
-from keras.applications import VGG16
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 from imutils import paths
 import numpy as np
 import argparse

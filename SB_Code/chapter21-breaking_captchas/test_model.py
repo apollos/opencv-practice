@@ -2,8 +2,8 @@
 # python test_model.py --input downloads --model output/lenet.hdf5
 
 # import the necessary packages
-from keras.preprocessing.image import img_to_array
-from keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
 from pyimagesearch.utils.captchahelper import preprocess
 from imutils import contours
 from imutils import paths

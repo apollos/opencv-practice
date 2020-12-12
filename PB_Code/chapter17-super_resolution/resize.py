@@ -3,10 +3,11 @@
 
 # import the necessary packages
 from conf import sr_config as config
-from keras.models import load_model
-from scipy import misc
+from tensorflow.keras.models import load_model
+from PIL import Image
 import numpy as np
 import argparse
+import PIL
 import cv2
 
 # construct the argument parse and parse the arguments
@@ -34,8 +35,14 @@ image = image[0:h, 0:w]
 
 # resize the input image using bicubic interpolation then write the
 # baseline image to disk
-scaled = misc.imresize(image, config.SCALE / 1.0,
-	interp="bicubic")
+lowW = int(w * (1.0 / config.SCALE))
+lowH = int(h * (1.0 / config.SCALE))
+highW = int(lowW * (config.SCALE / 1.0))
+highH = int(lowH * (config.SCALE / 1.0))
+scaled = np.array(Image.fromarray(image).resize((lowW, lowH),
+	resample=PIL.Image.BICUBIC))
+scaled = np.array(Image.fromarray(scaled).resize((highW, highH),
+	resample=PIL.Image.BICUBIC))
 cv2.imwrite(args["baseline"], scaled)
 
 # allocate memory for the output image
@@ -47,7 +54,7 @@ for y in range(0, h - config.INPUT_DIM + 1, config.LABEL_SIZE):
 	for x in range(0, w - config.INPUT_DIM + 1, config.LABEL_SIZE):
 		# crop ROI from our scaled image
 		crop = scaled[y:y + config.INPUT_DIM,
-			x:x + config.INPUT_DIM]
+			x:x + config.INPUT_DIM].astype("float32")
 
 		# make a prediction on the crop and store it in our output
 		# image

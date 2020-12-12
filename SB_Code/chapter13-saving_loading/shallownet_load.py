@@ -5,7 +5,7 @@
 from pyimagesearch.preprocessing import ImageToArrayPreprocessor
 from pyimagesearch.preprocessing import SimplePreprocessor
 from pyimagesearch.datasets import SimpleDatasetLoader
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from imutils import paths
 import numpy as np
 import argparse

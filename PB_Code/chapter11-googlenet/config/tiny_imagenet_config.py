@@ -32,7 +32,7 @@ DATASET_MEAN = "output/tiny-image-net-200-mean.json"
 # classification reports, etc.
 OUTPUT_PATH = "output"
 MODEL_PATH = path.sep.join([OUTPUT_PATH,
-	"deepergooglenet_tinyimagenet.hdf5"])
+	"checkpoints", "epoch_70.hdf5"])
 FIG_PATH = path.sep.join([OUTPUT_PATH,
 	"deepergooglenet_tinyimagenet.png"])
 JSON_PATH = path.sep.join([OUTPUT_PATH,
