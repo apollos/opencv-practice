@@ -1,0 +1,4 @@
+# define our AWS Access Key, Secret Key, and Region
+ACCESS_KEY = "YOUR_ACCESS_KEY"
+SECRET_KEY = "YOUR_SECRET_KEY"
+REGION = "YOUR_AWS_REGION"
